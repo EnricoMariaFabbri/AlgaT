@@ -14,7 +14,7 @@ public
 	stage.show();
 	/*Controller contr=new Controller(stage);
 	contr.goStartPage();*/
-	new Test().findPath();
+	//new Test().findPath();
 	}
 
 public static void main(String[] args) {
