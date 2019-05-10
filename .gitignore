@@ -8,3 +8,4 @@ out/*
 .html
 .DS_Store
 META-INF/*
+readme/*
