@@ -3,4 +3,4 @@ out/*
 *.iml
 **/.classpath
 **/.project
-**/Executable/*.html
+**/Executable/*.html.DS_Store
