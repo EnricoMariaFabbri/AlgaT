@@ -1,5 +1,6 @@
 **/.idea/*
 out/*
+!out/.gitkeep
 *.iml
 **/.classpath
 **/.project
