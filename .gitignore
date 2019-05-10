@@ -7,3 +7,4 @@ out/*
 **/Executable/*
 .html
 .DS_Store
+META-INF/*
