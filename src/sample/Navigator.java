@@ -19,6 +19,6 @@ public
 	}
 
 	static Scene getLesson(Integer index){ return lessons.get(index); }
-	void addLesson(Scene lesson){this.lessons.add(lesson);}
+	static void addLesson(Scene lesson){lessons.add(lesson);}
 	static int getLessonsSize(){return lessons.size();}
 }

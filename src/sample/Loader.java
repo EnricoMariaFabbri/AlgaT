@@ -18,7 +18,6 @@ public class Loader {
 		try{
 			//zona da controllare poichè nel jar non va ma in teoria dovrebbe andare
 			URL url=getClass().getResource(path);
-			System.out.println(url.toString());
 			InputStream stream =Loader.class.getResourceAsStream(path);
 			//fine zona controllo
 			InputStreamReader isr =new InputStreamReader(stream);

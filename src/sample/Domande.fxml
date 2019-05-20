@@ -34,6 +34,13 @@
             GridPane.columnIndex="0" GridPane.rowIndex="2"
             onAction="#prev">
     </Button>
+    <RadioButton fx:id="test" text="test"
+                 prefWidth="150" prefHeight="40"
+                 GridPane.columnIndex="0" GridPane.rowIndex="6"
+                 >
+
+        </RadioButton>
+
     <Button fx:id="startPage" text="Vai alla Pagina Iniziale"
             prefWidth="150" prefHeight="40" defaultButton="true"
             GridPane.columnIndex="0" GridPane.rowIndex="3"
