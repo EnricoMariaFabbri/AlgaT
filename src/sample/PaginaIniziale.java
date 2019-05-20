@@ -1,40 +1,35 @@
 package sample;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-public class PaginaIniziale extends GridPane {
+import java.util.ArrayList;
+
+
+public class PaginaIniziale{
 private
+@FXML
 	TextField numberLesson;
+@FXML
 	Button goToLesson;
-	Controller c;
-public
-	PaginaIniziale(Controller contr) {
-	this.c=contr;
-	this.setAlignment(Pos.TOP_LEFT);
-	this.setHgap(10);
-	this.setVgap(10);
-	this.numberLesson=new TextField();
-	this.add(numberLesson,0,1);
-	this.goToLesson=new Button("VAI ALLA LEZIONE");
-	this.add(goToLesson,1,1);
-	
-	this.goToLesson.setOnAction(new EventHandler<ActionEvent>(){
-		public void handle(ActionEvent e){
-			Integer lesson=Integer.parseInt(numberLesson.getText());
-			c.changeScene(c.lessons.get(lesson));
+
+	public void goToLesson(ActionEvent e){
+		String numLezione=numberLesson.getText();
+		boolean flag=GestioneErrori.checkLesson(numLezione);
+		if(flag) {
+			Scene scene=Navigator.getLesson(Integer.parseInt(numLezione));
+			Stage stage =(Stage) goToLesson.getScene().getWindow();
+			stage.setScene(scene);
 		}
-	});
-	
 	}
 }
 
