@@ -1,19 +1,15 @@
 package sample;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-
 
 public class Lezione {
 private
@@ -39,19 +35,21 @@ private
 	}
 
 	public void prev(ActionEvent e){
-		if(this.i==0){
-			//non decrementarlo
-		}else {
+		if(this.i>0){
 			this.i--;
+		}else{
+			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Sei già all'inizio della lezione");
+			dialogoAllerta.showAndWait();
 		}
 		this.setCurrentItem(this.i);
 	}
 
 	public void next(ActionEvent e){
-		if(this.i==this.items.size()-1){
-			//non incrementarlo
-		}else {
+		if(this.i<this.items.size()-1) {
 			this.i++;
+		}else{
+			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Sei già arrivato in fondo alla lezione");
+			dialogoAllerta.showAndWait();
 		}
 		this.setCurrentItem(this.i);
 	}

@@ -16,8 +16,8 @@ public class GestioneErrori {
     public static boolean checkLesson(String stringa){
         try{
             Integer lesson = Integer.parseInt(stringa);
-            if(lesson>=Navigator.getLessonsSize()){
-                showAlert("SIAMO OLTRE IL NUMERO DELLE LEZIONI");
+            if(lesson>=Navigator.getLessonsSize() || lesson<0){
+                showAlert("NON ESISTE LA LEZIONE");
                 return false;
             }
         }catch(Exception e){showAlert("NON È UN NUMERO");return false;}

@@ -43,21 +43,27 @@ public class Domande{
 
 	public void checkRisposta(ActionEvent e){
 		Domanda domandaCorrente=this.items.get(this.i);
-		RadioButton rd=(RadioButton)this.radioGroup.getSelectedToggle();
-		String rispostaUtente=rd.getText();
-		if(rispostaUtente!=domandaCorrente.getRisposta()){
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"risposta errata,la risposta è:\n"+ domandaCorrente.getRisposta());
-			dialogoAllerta.showAndWait();
-		}else{
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"risposta esatta");
-			dialogoAllerta.showAndWait();
-		}
-		if(this.i==this.items.size()-1){
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Hai risposto a tutte le domande");
+		RadioButton rd=new RadioButton();
+		if(this.radioGroup.getSelectedToggle()==null){
+			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Devi selezionare un'opzione");
 			dialogoAllerta.showAndWait();
 		}else {
-			this.i++;
-			this.populatePane(this.items.get(this.i));
+			rd = (RadioButton) this.radioGroup.getSelectedToggle();
+			String rispostaUtente = rd.getText();
+			if (!rispostaUtente.equals(domandaCorrente.getRisposta())) {
+				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "risposta errata,la risposta è:\n" + domandaCorrente.getRisposta());
+				dialogoAllerta.showAndWait();
+			} else {
+				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "risposta esatta");
+				dialogoAllerta.showAndWait();
+			}
+			if (this.i == this.items.size() - 1) {
+				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "Hai risposto a tutte le domande");
+				dialogoAllerta.showAndWait();
+			} else {
+				this.i++;
+				this.populatePane(this.items.get(this.i));
+			}
 		}
 	}
 

@@ -62,7 +62,7 @@ public class Loader {
 				lezione.addItem(slaiz);    //aggiungo la slide alla lista delle slide della lezione
 				}catch(Exception e){e.printStackTrace();}
 			}
-			lezione.setCurrentItem(0);
+			lezione.setCurrentItem(0);//import subito la prima slide
 		}
 
 		public void loadQuestions(String questionsPath,Domande domande){
