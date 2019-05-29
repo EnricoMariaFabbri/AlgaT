@@ -8,14 +8,13 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Navigator extends FXMLLoader {
+public class Navigator{
 private
 	static ArrayList<Scene> lessons;
 public 
 	Navigator(){
 	this.lessons=new ArrayList<Scene>();
 	new Loader().load(this);
-	//Collections.reverse(this.lessons);
 	}
 
 	static Scene getLesson(Integer index){ return lessons.get(index); }

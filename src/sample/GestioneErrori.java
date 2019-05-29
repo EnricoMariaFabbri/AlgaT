@@ -10,7 +10,7 @@ import java.util.Optional;
 public class GestioneErrori {
     public static void showAlert(String messaggio){
         Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, messaggio);
-        Optional<ButtonType> risposta = dialogoAllerta.showAndWait();
+        dialogoAllerta.showAndWait();
     }
 
     public static boolean checkLesson(String stringa){

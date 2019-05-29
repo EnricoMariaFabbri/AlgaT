@@ -2,14 +2,10 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class Entry extends Application {
     public void start(Stage primaryStage)throws Exception{

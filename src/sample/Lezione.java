@@ -39,25 +39,21 @@ private
 	}
 
 	public void prev(ActionEvent e){
-		this.i--;
-		GridPane root=(GridPane)nextItem.getParent();
-		root.getChildren().remove(currentItem);
-		System.out.println(this.i);
-		this.currentItem=this.items.get(this.i);
-		root.add(this.currentItem,0,1);
+		if(this.i==0){
+			//non decrementarlo
+		}else {
+			this.i--;
+		}
+		this.setCurrentItem(this.i);
 	}
 
 	public void next(ActionEvent e){
-		GridPane root=(GridPane)nextItem.getParent();
-		root.getChildren().remove(currentItem);
-		System.out.println(this.i);
-		this.currentItem=this.items.get(this.i);
-		root.add(this.currentItem,0,1);
 		if(this.i==this.items.size()-1){
 			//non incrementarlo
 		}else {
 			this.i++;
 		}
+		this.setCurrentItem(this.i);
 	}
 
 	public void goToStartPage(ActionEvent e){
@@ -67,9 +63,16 @@ private
 			stage.setScene(new Scene(paginaIniziale,2000,1000));
 		}catch(Exception exc){exc.printStackTrace();}
 	}
+
 	public void goToQuestions(ActionEvent e){
 		Stage stage=(Stage)questions.getScene().getWindow();
 		stage.setScene(this.relatedQuestions);
+	}
+	public void setCurrentItem(int index){
+		GridPane root=(GridPane)nextItem.getParent();
+		root.getChildren().remove(currentItem);
+		this.currentItem=this.items.get(index);
+		root.add(this.currentItem,0,1);
 	}
 	public String getTitle(){return this.title.getText();}
 	public void setRelatedQuestions(Scene questions){this.relatedQuestions=questions;}

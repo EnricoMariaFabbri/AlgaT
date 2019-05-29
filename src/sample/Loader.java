@@ -13,11 +13,10 @@ import java.util.ArrayList;
 
 public class Loader {
 
-	public ArrayList<String> getFileList(String path){
+	public ArrayList<String> getContent(String path){
 		ArrayList<String> files = new ArrayList<String>();
 		try{
 			//zona da controllare poichè nel jar non va ma in teoria dovrebbe andare
-			URL url=getClass().getResource(path);
 			InputStream stream =Loader.class.getResourceAsStream(path);
 			//fine zona controllo
 			InputStreamReader isr =new InputStreamReader(stream);
@@ -34,11 +33,11 @@ public class Loader {
 
 		public  void load(Navigator c){
 		try {
-			String lessonsPath = "Lezioni";
-			for (String lesson : this.getFileList(lessonsPath)) {
-				String currentLessonPath = lessonsPath + "/" + lesson;
+			String lessonsPath = "Lezioni/index.txt";
+			for (String lesson : this.getContent(lessonsPath)) {
+				String currentLessonPath = "Lezioni/" + lesson;
 				String slidesPath = currentLessonPath + "/Slides";
-				String questionsPath = currentLessonPath + "/Domande";
+				String questionsPath = currentLessonPath + "/domande.txt";
 				FXMLLoader lessonLoader = new FXMLLoader(getClass().getResource("Lezione.fxml"));
 				GridPane lezione = lessonLoader.load();
 				Lezione lessonController = lessonLoader.getController();
@@ -49,29 +48,34 @@ public class Loader {
 				questionController.setTitle(lesson);
 				lessonController.setRelatedQuestions(new Scene(domande, 2000, 1000));
 				this.loadSlides(slidesPath, lessonController);
-				this.loadQuestions(questionsPath, lesson, questionController);
+				this.loadQuestions(questionsPath,questionController);
 				c.addLesson(new Scene(lezione,2000,1000));
 			}
 		}catch(Exception e){e.printStackTrace();}
 		}
 
 		public void loadSlides(String slidesPath,Lezione lezione){
-			for(String slide:this.getFileList(slidesPath)){
+			for(String slide:this.getContent(slidesPath+"/index.txt")){
 				String slideToLoad=slidesPath+"/"+slide;
 				try{
 				GridPane slaiz=FXMLLoader.load(getClass().getResource(slideToLoad));
 				lezione.addItem(slaiz);    //aggiungo la slide alla lista delle slide della lezione
 				}catch(Exception e){e.printStackTrace();}
 			}
+			lezione.setCurrentItem(0);
 		}
 
-		public void loadQuestions(String questionsPath,String numLezione,Domande domande){
-			for(String domanda:this.getFileList(questionsPath)){
-				String questionToLoad=questionsPath+"/"+domanda;
-				try {
-					GridPane questione=FXMLLoader.load(getClass().getResource(questionToLoad));
-					domande.addItem(questione);
-				}catch(Exception e){e.printStackTrace();}
-			}
+		public void loadQuestions(String questionsPath,Domande domande){
+	        ArrayList<String> fileDomande=this.getContent(questionsPath);
+			int numDomande=fileDomande.size()/3;
+			int i=0;
+			for(int j=0;j<numDomande;j++){
+			    String rigaDomanda=fileDomande.get(i);
+			    String rigaOpzioni=fileDomande.get(i+1);
+			    String rigaRisposta=fileDomande.get(i+2);
+			    domande.addItem(new Domanda(rigaDomanda,rigaOpzioni,rigaRisposta));
+			    i=i+3;
+            }
+			domande.populatePane(domande.getItems().get(0));//imposto come finesta iniziale la prima domanda
 		}
 }

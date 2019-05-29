@@ -1,0 +1,3 @@
+Stai bene caro?
+No;Si;Cosi cosi;
+Si;Perchè di si

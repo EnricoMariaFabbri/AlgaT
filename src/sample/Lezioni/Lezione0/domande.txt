@@ -1,0 +1,6 @@
+Che tempo fa?
+Sole;Pioggia;Neve
+Sole;Perchè non piove e non nevica
+Chi ha vinto le europee?
+Pd;Lega;Berlusca;
+Lega;Perchè ha preso più voti
