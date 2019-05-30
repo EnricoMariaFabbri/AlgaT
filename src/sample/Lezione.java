@@ -14,44 +14,38 @@ import java.util.ArrayList;
 public class Lezione {
 private
 	@FXML
-	GridPane currentItem;
+	GridPane currentSlide;
 	@FXML
 	Label title;
 	@FXML
-	Button nextItem;
+	Button nextSlide;
 	@FXML
-	Button prevItem;
+	Button prevSlide;
 	@FXML
 	Button startPage;
 	@FXML
 	Button questions;
-	ArrayList<GridPane> items;
+	ArrayList<GridPane> slides;
 	int i;//semplice contatore
 	Scene relatedQuestions;
 
 	public Lezione(){
-		this.items=new ArrayList<GridPane>();
+		this.slides=new ArrayList<GridPane>();
 		this.i=0;
 	}
 
 	public void prev(ActionEvent e){
-		if(this.i>0){
-			this.i--;
-		}else{
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Sei già all'inizio della lezione");
-			dialogoAllerta.showAndWait();
+		if(!GestioneErrori.isLimitReached(this.i)){//se non sono gia alla prima slide
+			this.i--;//carico l'indice precedente
 		}
-		this.setCurrentItem(this.i);
+		this.setCurrentItem(this.i);//carico la slide precedente
 	}
 
 	public void next(ActionEvent e){
-		if(this.i<this.items.size()-1) {
-			this.i++;
-		}else{
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Sei già arrivato in fondo alla lezione");
-			dialogoAllerta.showAndWait();
+		if(!GestioneErrori.isLimitReached(this.i,this.slides.size())){//se non sto superando il numero di slide
+			this.i++;// carico l'indice successivo
 		}
-		this.setCurrentItem(this.i);
+		this.setCurrentItem(this.i);//carico la slide successiva
 	}
 
 	public void goToStartPage(ActionEvent e){
@@ -66,15 +60,15 @@ private
 		Stage stage=(Stage)questions.getScene().getWindow();
 		stage.setScene(this.relatedQuestions);
 	}
+
 	public void setCurrentItem(int index){
-		GridPane root=(GridPane)nextItem.getParent();
-		root.getChildren().remove(currentItem);
-		this.currentItem=this.items.get(index);
-		root.add(this.currentItem,0,1);
+		GridPane root=(GridPane)nextSlide.getParent();//ottengo il gridpane root della scena
+		root.getChildren().remove(currentSlide);//ELIMINO IL CURRENT ITEM PERCHÈ LE SLIDE SONO GIÀ DEI GRIDPANE,QUINDI NON HA SENSO PULIRE E REINSERIRE OGNI ELEMENTO
+		this.currentSlide=this.slides.get(index);//imposto come slide corrente,la slide all'indice index
+		root.add(this.currentSlide,0,1);//aggiungo la slide alla "scena"
 	}
-	public String getTitle(){return this.title.getText();}
+
 	public void setRelatedQuestions(Scene questions){this.relatedQuestions=questions;}
-	public void addItem(GridPane item){this.items.add(item);}
-	public ArrayList<GridPane> getItems(){return this.items;}
+	public void addItem(GridPane item){this.slides.add(item);}
 	public void setTitle(String titolo){this.title.setText(titolo);}
 }

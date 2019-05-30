@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Domande{
 	private
 	@FXML
-	GridPane currentItem;
+	GridPane currentQuestion;
 	@FXML
 	Label title;
 	@FXML
@@ -24,11 +24,11 @@ public class Domande{
 	@FXML
 	Button rispondi;
 	ToggleGroup radioGroup;
-	ArrayList<Domanda> items;
+	ArrayList<Domanda> questions;
 	int i;//semplice contatore
 
 	public Domande(){
-		this.items=new ArrayList<Domanda>();
+		this.questions=new ArrayList<Domanda>();
 		this.radioGroup=new ToggleGroup();//serve per gestire i vari radioButton
 		this.i=0;
 	}
@@ -42,46 +42,37 @@ public class Domande{
 	}
 
 	public void checkRisposta(ActionEvent e){
-		Domanda domandaCorrente=this.items.get(this.i);
-		RadioButton rd=new RadioButton();
-		if(this.radioGroup.getSelectedToggle()==null){
-			Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING,"Devi selezionare un'opzione");
-			dialogoAllerta.showAndWait();
-		}else {
-			rd = (RadioButton) this.radioGroup.getSelectedToggle();
+		Domanda domandaCorrente=this.questions.get(this.i);
+		if(GestioneErrori.isSelectedRisp(this.radioGroup)){
+			RadioButton rd = (RadioButton) this.radioGroup.getSelectedToggle();
 			String rispostaUtente = rd.getText();
 			if (!rispostaUtente.equals(domandaCorrente.getRisposta())) {
-				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "risposta errata,la risposta è:\n" + domandaCorrente.getRisposta());
-				dialogoAllerta.showAndWait();
+				GestioneErrori.showAlert("risposta ERRATA,la risposta è:\n" + domandaCorrente.getRisposta()+","+domandaCorrente.getSpiegazione());
 			} else {
-				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "risposta esatta");
-				dialogoAllerta.showAndWait();
+				GestioneErrori.showAlert("risposta ESATTA");
 			}
-			if (this.i == this.items.size() - 1) {
-				Alert dialogoAllerta = new Alert(Alert.AlertType.WARNING, "Hai risposto a tutte le domande");
-				dialogoAllerta.showAndWait();
-			} else {
+			if(!GestioneErrori.isLimitReached(this.i,this.questions.size())) {
 				this.i++;
-				this.populatePane(this.items.get(this.i));
+				this.populatePane(this.questions.get(this.i));
 			}
 		}
 	}
 
 	public void populatePane(Domanda dom){
-		this.currentItem.getChildren().removeAll(this.currentItem.getChildren());
+		this.radioGroup=new ToggleGroup();//pulisco il gruppo di radioButton
+		this.currentQuestion.getChildren().removeAll(this.currentQuestion.getChildren());//PULISCO IL CURRENT ITEM,POICHÈ LE DOMANDE NON SONO DEI GRIDPANE
 		Label domanda=new Label(dom.getDomanda());
-		this.currentItem.add(domanda,0,1);
+		this.currentQuestion.add(domanda,0,1);
 		int j=1;//la linea su cui inserire la radioButton
-		for(String opt:dom.getOpzioni()){
+		for(String opt:dom.getOpzioni()){//per ogni domanda,gli associo un radioButton
 			RadioButton rd=new RadioButton(opt);
 			rd.setToggleGroup(this.radioGroup);
-			this.currentItem.add(rd,1,j);
+			this.currentQuestion.add(rd,1,j);
 			j++;
 		}
 	}
 
-	public String getTitle(){return this.title.getText();}
-	public void addItem(Domanda item){this.items.add(item);}
-	public ArrayList<Domanda> getItems(){return this.items;}
+	public void addItem(Domanda item){this.questions.add(item);}
+	public ArrayList<Domanda> getItems(){return this.questions;}
 	public void setTitle(String titolo){this.title.setText("Domande della "+titolo);}
 }

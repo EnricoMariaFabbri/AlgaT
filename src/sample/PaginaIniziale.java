@@ -1,18 +1,10 @@
 package sample;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 
 public class PaginaIniziale{
@@ -24,9 +16,9 @@ private
 
 	public void goToLesson(ActionEvent e){
 		String numLezione=numberLesson.getText();
-		boolean flag=GestioneErrori.checkLesson(numLezione);
-		if(flag) {
-			Scene scene=Navigator.getLesson(Integer.parseInt(numLezione));
+		int maxsize=Navigator.getLessonsSize();
+		if(GestioneErrori.controlLessonIndex(numLezione,maxsize)) {//se esiste la lezione i-esima ed è valida
+			Scene scene=Navigator.getLesson(Integer.parseInt(numLezione));//carico la lezione i-esima
 			Stage stage =(Stage) goToLesson.getScene().getWindow();
 			stage.setScene(scene);
 		}
