@@ -5,9 +5,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -16,9 +14,8 @@ public class Loader {
 	public ArrayList<String> getContent(String path){//ottengo tutto il contenuto del file path
 		ArrayList<String> files = new ArrayList<String>();
 		try{
-			InputStream stream =Loader.class.getResourceAsStream(path);
-			InputStreamReader isr =new InputStreamReader(stream);
-			BufferedReader buf=new BufferedReader(isr);
+			FileReader reader= new FileReader(path);
+			BufferedReader buf=new BufferedReader(reader);
 			String line = buf.readLine();
 				while (line != null){
 					files.add(line);
@@ -31,9 +28,10 @@ public class Loader {
 
 		public  void load(Navigator c){
 		try {
-			String lessonsPath = "Lezioni/index.txt";
+			String lessonsPath = System.getProperty("user.dir")+"/Lezioni/index.txt";
+			System.out.println(lessonsPath);
 			for (String lesson : this.getContent(lessonsPath)) {
-				String currentLessonPath = "Lezioni/" + lesson;//imposto il path della lezione da caricare
+				String currentLessonPath =System.getProperty("user.dir")+"/Lezioni/" + lesson;//imposto il path della lezione da caricare
 				String slidesPath = currentLessonPath + "/Slides";//imposto il path delle slide della lezione da caricare
 				String questionsPath = currentLessonPath + "/domande.txt";//imposto il path delle domande della lezione da caricare
 				FXMLLoader lessonLoader = new FXMLLoader(getClass().getResource("Lezione.fxml"));//punto la grafica della lezione
@@ -56,7 +54,8 @@ public class Loader {
 			for(String slide:this.getContent(slidesPath+"/index.txt")){
 				String slideToLoad=slidesPath+"/"+slide;
 				try{
-					GridPane slaiz=FXMLLoader.load(getClass().getResource(slideToLoad));
+					URL slideUrl=new File(slideToLoad).toURI().toURL();
+					GridPane slaiz=FXMLLoader.load(slideUrl);
 					lezione.addItem(slaiz);    //aggiungo la slide alla lista delle slide della lezione
 				}catch(Exception e){e.printStackTrace();}
 			}

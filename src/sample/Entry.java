@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
+
 public class Entry extends Application {
     public void start(Stage primaryStage)throws Exception{
         Navigator nav=new Navigator();
