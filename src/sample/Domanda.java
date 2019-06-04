@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Arrays;
+
 public class Domanda {
     private
         String domanda;
@@ -17,6 +19,11 @@ public class Domanda {
         String[] getOpzioni(){return this.opzioni;}
         String getRisposta(){return this.risposta;}
         String getSpiegazione(){return this.spiegazione;}
-
+        boolean isStructuredWell(){//la risposta è presente nelle opzioni?
+            if(!Arrays.asList(this.opzioni).contains(this.risposta)){
+                return false;
+            }
+            return true;
+        }
 
 }
